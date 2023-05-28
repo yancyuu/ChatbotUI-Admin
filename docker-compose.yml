@@ -1,0 +1,34 @@
+version: '3'
+services:
+  frontend:
+    image: yancyyu/chatbotui-admin-frontend:v2.0
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_KEY=sk-jRq31QdZZjea3wUsotEqT3BlbkFJ3HObWcQMzvnESk6Uajw
+      - USER_MANAGER_HOST=http://backend:6003  #和下面的后台端口保持一致
+    command: [ "npm","start" ]
+    depends_on:
+      - backend
+  backend:
+    image: yancyyu/chatbotui-admin-backend:v1.0
+    volumes:
+      - ./backend:/app
+    environment:
+    - MONGODB_SERVER_ADDRESS=db
+    - MONGODB_PORT=27017
+    - MONGODB_USER_NAME=root
+    - MONGODB_USER_PASSWORD=chatbotui
+    command: [ "python3","app.py","--port", "6003" ]
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=root
+    - MONGO_INITDB_ROOT_PASSWORD=chatbotui
+    volumes:
+      - ./db_data:/data/db
+
+volumes:
+  db_data:

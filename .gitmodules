@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = http://github.com/lisper-inmove/flask-template.git
+[submodule "frontend"]
+	path = frontend
+	url = http://github.com/lisper-inmove/chatbot-ui
