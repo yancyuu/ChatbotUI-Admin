@@ -12,13 +12,14 @@ services:
       - backend
   backend:
     image: yancyyu/chatbotui-admin-backend:v1.0
-    volumes:
-      - ./backend:/app
+    # volumes:
+    #  - ./backend:/app  #挂载目录方便调试开发
     environment:
     - MONGODB_SERVER_ADDRESS=db
     - MONGODB_PORT=27017
     - MONGODB_USER_NAME=root
     - MONGODB_USER_PASSWORD=chatbotui
+    - LOGGER_ENABLE_SYSLOG=false
     command: [ "python3","app.py","--port", "6003" ]
     depends_on:
       - db
